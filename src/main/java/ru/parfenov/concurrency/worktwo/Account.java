@@ -8,11 +8,11 @@ public class Account {
         this.cacheBalance = cacheBalance;
     }
 
-    public void addMoney(int money) {
+    public synchronized void addMoney(int money) {
         this.cacheBalance += money;
     }
 
-    public boolean takeOffMoney(int money) {
+    public synchronized boolean takeOffMoney(int money) {
         if (this.cacheBalance < money) {
             return false;
         }
@@ -21,7 +21,7 @@ public class Account {
         return true;
     }
 
-    public int getCacheBalance() {
+    public synchronized int getCacheBalance() {
         return cacheBalance;
     }
 

@@ -15,7 +15,8 @@ public class AccountThread implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 4000; i++) {
-            // implement
+            accountFrom.takeOffMoney(money);
+            accountTo.addMoney(money);
         }
     }
 }

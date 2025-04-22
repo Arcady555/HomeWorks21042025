@@ -1,6 +1,6 @@
 package ru.parfenov.concurrency.worktwo;
 
-public class Account {
+public final class Account {
 
     private int cacheBalance;
 
@@ -12,7 +12,7 @@ public class Account {
         this.cacheBalance += money;
     }
 
-    public boolean takeOffMoney(int money) {
+    public synchronized boolean takeOffMoney(int money) {
         if (this.cacheBalance < money) {
             return false;
         }

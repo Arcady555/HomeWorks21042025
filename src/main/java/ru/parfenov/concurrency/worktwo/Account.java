@@ -12,7 +12,7 @@ public final class Account {
         this.cacheBalance += money;
     }
 
-    public synchronized boolean takeOffMoney(int money) {
+    public boolean takeOffMoney(int money) {
         if (this.cacheBalance < money) {
             return false;
         }

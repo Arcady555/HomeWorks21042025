@@ -6,6 +6,7 @@ public class AccountThread implements Runnable {
     private final Account accountTo;
     private final int money;
 
+
     public AccountThread(Account accountFrom, Account accountTo, int money) {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
@@ -15,9 +16,12 @@ public class AccountThread implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 4000; i++) {
-            accountFrom.takeOffMoney(money);
-            accountTo.addMoney(money);
-            System.out.println(i);
+            synchronized (accountFrom) {
+                synchronized (accountTo) {
+                    accountFrom.takeOffMoney(money);
+                    accountTo.addMoney(money);
+                }
+            }
         }
     }
 }

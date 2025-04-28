@@ -15,13 +15,29 @@ public class AccountThread implements Runnable {
 
     @Override
     public void run() {
+        int fromHash = System.identityHashCode(accountFrom);
+        int toHash = System.identityHashCode(accountTo);
         for (int i = 0; i < 4000; i++) {
-            synchronized (accountFrom) {
+            if (fromHash <= toHash) {
+                synchronized (accountFrom) {
+                    synchronized (accountTo) {
+                        doTransfer(accountFrom, accountTo, money);
+                    }
+                }
+            } else {
                 synchronized (accountTo) {
-                    accountFrom.takeOffMoney(money);
-                    accountTo.addMoney(money);
+                    synchronized (accountFrom) {
+                        doTransfer(accountFrom, accountTo, money);
+                    }
                 }
             }
+        }
+
+    }
+
+    private void doTransfer(Account accountFrom, Account accountTo, int money) {
+        if (accountFrom.takeOffMoney(money)) {
+            accountTo.addMoney(money);
         }
     }
 }
